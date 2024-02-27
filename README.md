@@ -54,4 +54,3 @@ python manage.py createsuperuser
 8) Run project on localhost:
 ```
 python manage.py runserver
-```
