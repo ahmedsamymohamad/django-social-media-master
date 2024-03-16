@@ -90,7 +90,7 @@
   {% for comment in comments %}
   <div class="comments-inside">
     <a class="link-style-none" href="{% url 'profile' comment.author.username %}">
-      <img class="rounded-circle article-img-comment" src="{{comment.author.profile.image_thumbnail_user.url}}" width="55">
+      <img class="rounded-circle article-img-comment" src="{{comment.author.profile.image.url}}" width="55">
     </a>
     <article class="media content-section-blue">
       <div class="media-body">

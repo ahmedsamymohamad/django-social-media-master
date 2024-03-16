@@ -1,5 +1,6 @@
 {% extends "blog/base.html" %}
 {% load static %}
+{% block title %}<title>{{ chat_room.group_name }}</title>{% endblock %}
 {% block content %}
 <div class="content-section">
     <div style="display: flex; align-items: center;">
@@ -16,14 +17,12 @@
                     {{ message.message }}<br>
                     <small class="text-muted">{{ message.timestamp }}</small>
                 </div>
-                {% if message.sender.profile.image_thumbnail_user.url %}
-                <img src="{{ message.sender.profile.image_thumbnail_user.url }}" class="rounded-circle chat-image" alt="Profile">
-                {% endif %}
+                <img src="{{ message.sender.profile.image.url }}" class="rounded-circle chat-image" alt="Profile">
             </div>
         {% else %}
             <div class="d-flex justify-content-start">
                 <!-- Profile image on the left for the other user -->
-                <img src="{{ message.sender.profile.image_thumbnail_user.url }}" class="rounded-circle chat-image" alt="Profile">
+                <img src="{{ message.sender.profile.image.url }}" class="rounded-circle chat-image" alt="Profile">
                 <div class="alert alert-primary" role="alert">
                     {{message.sender}}:<br>
                     {{ message.message }}<br>
@@ -38,6 +37,52 @@
         <input class="message-input form-control" placeholder="Type your message" type="text" id="chat-message-input" name="message">
     </form>
 </div>
+<div >
+    <a href="#" data-toggle="modal" data-target="#UpdateGroupModal">
+        <button class="btn btn-info btn-sm">Update Group</button>
+    </a>
+    
+    <a href="{% url 'chat:chat_room_delete' room_name=chat_room.room_name %}"
+    class="btn btn-danger btn-sm"
+    >
+    Delete
+    </a>
+</div>
+
+<!-- Update Group Modal -->
+<div class="modal fade" id="UpdateGroupModal" tabindex="-1" role="dialog" aria-labelledby="updateGroupModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateGroupModalLabel">Update Group</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="UpdateGroupForm" method="post" action="">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="groupName">Group Name:</label>
+              <input type="text" class="form-control" id="groupName" name="group_name" value="{{chat_room.group_name}}" required>
+            </div>
+            <div class="form-group">
+              <label>Participants:</label>
+              {% for participant in all_participants %}
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="{{ participant.username }}" name="participants" value="{{ participant.username }}">
+                  <label class="form-check-label" for="{{ participant.username }}">{{ participant.username }}</label>
+                </div>
+              {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-primary">Confirm</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 
 <script type="text/javascript">
     const room_name = `{{ room_name }}`
@@ -85,6 +130,13 @@
     };
 
     let form = document.getElementById('chat-form');
+    let UpdateGroup= document.getElementById('groupName')
+
+    UpdateGroup.addEventListener('change', function(e){
+        e.preventDefault()
+        UpdateGroup.setAttribute('value',e.target.value)
+    })
+
     form.addEventListener('submit', (e)=>{
         e.preventDefault()
         let message = e.target.message.value

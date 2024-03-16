@@ -14,13 +14,8 @@
     <div class="media">
         <div class="profile-image-div">
             
-			{% if user_id.profile.image_thumbnail_user %}
 			<img class="rounded-circle account-img" id="profileImage" 
-			src="{{ user_id.profile.image_thumbnail_user.url }}">
-			{% else %}
-			<img class="rounded-circle account-img" id="profileImage" 
-				src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png">
-			{% endif %}
+			src="{{ user_id.profile.image.url }}">
 			
             {% if user_id == request.user %}
             <a href="{% url 'profile-update' %}" data-toggle="tooltip-update" title="Edit Profile">
@@ -171,7 +166,7 @@
         	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
           		<span aria-hidden="true">&times;</span>
     		</button>
-        	<p>followers</p>
+        	<p>Friends</p>
 
         	{% for pro in user_id.profile.friends.all %}
         	<div class="user-follow-status-model">
@@ -212,9 +207,7 @@
         	{% for pro in user_id.profile.friends.all %}
         	<div class="user-follow-status-model">
         		<div class="user-follow-status-model-image">
-					{% if pro.profile.image_thumbnail_user.url %}
-        			<img class="rounded-circle account-img-f" src="{{pro.profile.image_thumbnail_user.url}}">
-					{% endif%}
+        			<img class="rounded-circle account-img-f" src="{{pro.profile.image.url}}">
         		</div>
         		<div class="user-follow-status-model-name">
         			<a href="{% url 'profile' pro.username %}" class="link-style-none">{{pro.username}}</a>

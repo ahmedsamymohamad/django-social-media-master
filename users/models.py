@@ -20,7 +20,7 @@ WING = [
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=25,blank=True)
-    image = models.ImageField(upload_to='profile_pics')
+    image = models.ImageField(upload_to='profile_pics',default='profile_pics/avatar.jpg')
     image_thumbnail_user = ImageSpecField(source='image',
                                       processors=[Transpose(),ResizeToFill(170, 170)],
                                       format='JPEG',

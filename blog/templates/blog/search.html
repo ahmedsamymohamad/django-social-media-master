@@ -27,7 +27,7 @@
             <div class="d-flex flex-row justify-content-between align-items-center">
                 <div class="d-flex flex-row align-items-center">
                   <a class="link-style-none" href="{% url 'profile' pro.username %}">
-                    <img class="rounded-circle article-img-search" src="{{pro.profile.image_thumbnail_user.url}}" width="55">
+                    <img class="rounded-circle article-img-search" src="{{pro.profile.image.url}}" width="55">
                   </a>
                   <div class="d-flex flex-column align-items-start ml-2">
                     <span>{{ pro.profile.name }}</span>
@@ -35,8 +35,8 @@
                   </div>
                 </div>
                 <div class="d-flex flex-row align-items-center mt-2">
-                  {% if pro in user.profile.follows.all %}
-                    <p>following</p>
+                  {% if pro in user.profile.friends.all %}
+                    <p>Friends</p>
                   {% endif %}
                 </div>
             </div>      
@@ -53,7 +53,7 @@
         
         <article class="media content-section">
           <img class="rounded-circle article-img"
-               src="{{ post.author.profile.image_thumbnail_user.url }}">
+               src="{{ post.author.profile.image.url }}">
           <div class="media-body">
             <div class="article-metadata">
               <a class="mr-2"
@@ -70,7 +70,7 @@
             <a class="read-more" href="{% url 'blog:post-detail' post.slug %}"><small>Read More</small></a>
 
             <div class="post-applause">
-              <span class="badge badge-secondary">{{post.likes.count}} NCC Claps</span>
+              <span class="badge badge-secondary">{{post.likes.count}}Claps</span>
             </div>
             
           </div>
@@ -83,7 +83,7 @@
     <div class="infinite-container">
     {% for post in posts %}
       <article class="media content-section infinite-item">
-        <img class="rounded-circle article-img" src="{{ post.author.profile.image_thumbnail_user.url }}">
+        <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
           <div class="media-body">
             <div class="article-metadata">
               <a class="mr-2"
@@ -99,7 +99,7 @@
             <p class="article-content">{{ post.content|truncatewords:30}}</p>
             <a class="read-more" href="{% url 'blog:post-detail' post.slug %}"><small>Read More</small></a>
             <div class="post-applause">
-              <span class="badge badge-secondary">{{post.likes.count}} NCC Claps</span>
+              <span class="badge badge-secondary">{{post.likes.count}} Claps</span>
             </div>
           </div>
         </article>

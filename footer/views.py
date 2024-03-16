@@ -3,6 +3,8 @@ from .forms import ContactForm
 from django.http import JsonResponse
 from .models import Facts
 import random
+from django.core.mail import send_mail
+from django.conf import settings
 # Create your views here.
 
 def contact(request):
@@ -11,7 +13,18 @@ def contact(request):
 		form = ContactForm(request.POST)
 		if form.is_valid():
 			form.save()
-			message = "Your Message/Feedback is sent, manager@nccbuddies will contact you soon. Thank You."
+   
+			message = form.cleaned_data['message']
+			email = form.cleaned_data['email']
+   
+			send_mail(
+				'Subject: Contact Form Submission',
+				f'from: {email},\nMessage:\n{message}',
+				settings.EMAIL_HOST_USER,  # Sender's email address
+				['ahmed01223330@gmail.com'],  # Receiver's email address
+				fail_silently=False,
+			)
+			message = "Your Message/Feedback is sent, manager@postchatub will contact you soon. Thank You."
 			return render(request,'footer/contact.html',{'message':message})
 	else:
 		form = ContactForm()

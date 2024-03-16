@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from .models import ChatRoom, Message
-
+from django.urls import reverse_lazy
+from django.views.generic import DeleteView
 
 def chat_list(request):
 
@@ -64,6 +65,16 @@ def group_chat(request, room_name):
         # Handle the case where the group chat room doesn't exist
         # You can redirect the user to an error page or any other appropriate action
         return render(request, "chat/group_chat_not_found.html")
+    
+    if request.method == 'POST':
+        group_name = request.POST.get('group_name')
+        participants_usernames = request.POST.getlist('participants')
+        # Update the existing ChatRoom with the provided data
+        chat_room.group_name = group_name
+        chat_room.participants.clear()
+        chat_room.participants.set(participants_usernames)
+        chat_room.save()
+
 
     participants = chat_room.participants.values_list('id', flat=True)
     messages = Message.objects.filter(room=chat_room).order_by('timestamp')
@@ -76,3 +87,19 @@ def group_chat(request, room_name):
     }
 
     return render(request, "chat/group_chat.html", context)
+
+class ChatRoomDeleteView(DeleteView):
+    model = ChatRoom
+    success_url = reverse_lazy('chat:chat_list')  # URL to redirect after successful deletion
+    template_name = 'chat/confirm_delete.html'  # Template for confirmation page
+
+    def get_object(self, queryset=None):
+        # Retrieve the ChatRoom object based on room_name
+        return ChatRoom.objects.get(room_name=self.kwargs['room_name'])
+
+    def delete(self, request, *args, **kwargs):
+        # Override delete method to perform additional operations if needed
+        chat_room = self.get_object()
+        # Perform any additional operations before deleting if needed
+        chat_room.delete()
+        return redirect(self.get_success_url())

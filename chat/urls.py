@@ -7,5 +7,6 @@ urlpatterns = [
     path('', views.chat_list, name='chat_list'),
     path('<str:username>/', views.chat, name='chat'),
     path('group/<str:room_name>/', views.group_chat, name='group_chat'),
+    path('group/<str:room_name>/delete/', views.ChatRoomDeleteView.as_view(), name='chat_room_delete'),
 ]
 

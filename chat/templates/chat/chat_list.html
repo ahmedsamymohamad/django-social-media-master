@@ -24,9 +24,7 @@
           {% for participant in chat_room.participants.all %}
             {% if participant.username != request.user.username %}
               <li class="list-group-item">
-                {% if participant.profile.image_thumbnail_user.url %}
-                <img src="{{ participant.profile.image_thumbnail_user.url }}" class="rounded-circle chat-image" alt="Profile">
-                {% endif %}
+                <img src="{{ participant.profile.image.url }}" class="rounded-circle chat-image" alt="Profile">
                 <a href="{% url 'chat:chat' participant.username %}">{{ participant.username }}</a>
               </li>
             {% endif %}

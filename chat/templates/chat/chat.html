@@ -3,10 +3,8 @@
 {% block content %}
 <div class="content-section">
     <div style="display: flex; align-items: center;">
-        {% if chat_user.profile.image_thumbnail_user.url%}
-        <img src="{{ chat_user.profile.image_thumbnail_user.url }}" 
+        <img src="{{ chat_user.profile.image.url }}" 
         class="rounded-circle chat-image" alt="Profile">    
-        {% endif%}
         <p><b>{{ chat_user.username }}</b></p>
     </div>
     <hr>
@@ -18,14 +16,12 @@
                     {{ message.message }}<br>
                     <small class="text-muted">{{ message.timestamp }}</small>
                 </div>
-                <img src="{{ message.sender.profile.image_thumbnail_user.url }}" class="rounded-circle chat-image" alt="Profile">
+                <img src="{{ message.sender.profile.image.url }}" class="rounded-circle chat-image" alt="Profile">
             </div>
         {% else %}
             <div class="d-flex justify-content-start">
                 <!-- Profile image on the left for the other user -->
-                {% if chat_user.profile.image_thumbnail_user.url %}
-                <img src="{{ message.sender.profile.image_thumbnail_user.url }}" class="rounded-circle chat-image" alt="Profile">
-                {% endif%}
+                <img src="{{ message.sender.profile.image.url }}" class="rounded-circle chat-image" alt="Profile">
                 <div class="alert alert-primary" role="alert">
                     {{ message.message }}<br>
                     <small class="text-muted">{{ message.timestamp }}</small>

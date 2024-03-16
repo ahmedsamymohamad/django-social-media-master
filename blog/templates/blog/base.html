@@ -23,9 +23,9 @@
 <body>
     <header class="site-header">
       {% if user.is_authenticated %}
-      <nav class="navbar navbar-expand-md navbar-dark bg-blue fixed-top d-none d-md-block">
+      <nav class="navbar navbar-expand-md bg-blue border-bottom fixed-top d-none d-md-block">
       {% else %}
-      <nav class="navbar navbar-expand-md navbar-dark bg-blue fixed-top">
+      <nav class="navbar navbar-expand-md bg-blue border-bottom fixed-top">
       {% endif %}
 
         <div class="container">

@@ -127,10 +127,17 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'blog:home'
 LOGIN_URL = 'login'
 
-ADMIN_SITE_HEADER = "BUDDIES"
+ADMIN_SITE_HEADER = "PostChat Hub"
 
 TIME_ZONE =  'Asia/Kolkata'
 
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'ahmed01223330@gmail.com'  # Your Gmail email address
+EMAIL_HOST_PASSWORD = 'ybbu yvik feek vswy' 
