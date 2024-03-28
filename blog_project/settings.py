@@ -9,35 +9,30 @@ DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1','django-social-media-master.onrender.com']
 
 INSTALLED_APPS = [
-
-    # channels
-    'daphne',
-
+    # Default Django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles',  # Include 'django.contrib.staticfiles' here
+
+    # Third-party apps
     'cloudinary_storage',
     'cloudinary',
     
-    # My_apps.
+    # Your apps
     'blog',
     'users.apps.UsersConfig',
     'footer',
     'chat',
-
-    # Third_party_apps.
     'crispy_forms',
-    "crispy_bootstrap4",
-    # taggit
+    'crispy_bootstrap4',
     'taggit',
-    #forthumbnails
-    'imagekit', 
+    'imagekit',
     'storages',
-
 ]
+
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.environ.get('CLOUD_NAME'),
