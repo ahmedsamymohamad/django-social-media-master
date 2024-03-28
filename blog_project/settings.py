@@ -4,9 +4,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = '6+_(6czw@+gbm$5q@j6u#ubk^)19o&0+3wi!2u(%x^^y^!d(j#'
 
-DEBUG = True
+DEBUG = os.environ.get('DEBUG') != False
 
-ALLOWED_HOSTS = ['127.0.0.1','django-social-media-master.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'django-social-media-master.onrender.com']
 
 INSTALLED_APPS = [
     # Default Django apps
@@ -159,3 +159,4 @@ DATABASES = {
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
+
