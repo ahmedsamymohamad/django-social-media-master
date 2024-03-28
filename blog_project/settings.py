@@ -6,7 +6,7 @@ SECRET_KEY = '6+_(6czw@+gbm$5q@j6u#ubk^)19o&0+3wi!2u(%x^^y^!d(j#'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','nccbuddy.com','www.nccbuddy.com']
+ALLOWED_HOSTS = ['127.0.0.1','django-social-media-master.onrender.com']
 
 INSTALLED_APPS = [
 
@@ -135,9 +135,20 @@ TIME_ZONE =  'Asia/Kolkata'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'ahmed01223330@gmail.com'  # Your Gmail email address
-EMAIL_HOST_PASSWORD = 'ybbu yvik feek vswy' 
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND') 
+EMAIL_HOST = os.environ.get('EMAIL_HOST') 
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER') # Your Gmail email address
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+
+DATABASES = {
+    'default': {
+        'ENGINE': os.environ.get('DATABASES_ENGINE') ,
+        'NAME': os.environ.get('DATABASES_NAME') ,         # Database name
+        'USER': os.environ.get('DATABASES_USER') ,         # Database user
+        'PASSWORD': os.environ.get('DATABASES_PASSWORD') ,  # Database password
+        'HOST': os.environ.get('DATABASES_HOST') ,  # Database host
+        'PORT': '',  # Leave empty to use the default port (5432)
+    }
+}
