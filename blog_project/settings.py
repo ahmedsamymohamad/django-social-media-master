@@ -1,10 +1,16 @@
 import os
+from pathlib import Path
+import environ
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+env = environ.Env()
 
-SECRET_KEY = '6+_(6czw@+gbm$5q@j6u#ubk^)19o&0+3wi!2u(%x^^y^!d(j#'
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-DEBUG = os.environ.get('DEBUG') == True
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
+SECRET_KEY = env('SECRET_KEY')
+
+DEBUG = env.bool('DEBUG')
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'django-social-media-master.onrender.com']
 
@@ -33,11 +39,13 @@ INSTALLED_APPS = [
     'storages',
 ]
 
+DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
+DBBACKUP_STORAGE_OPTIONS = {'location': os.path.join(BASE_DIR, 'backup')}
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUD_NAME'),
-    'API_KEY': os.environ.get('API_KEY'),
-    'API_SECRET': os.environ.get('API_SECRET')
+    'CLOUD_NAME': env('CLOUD_NAME'),
+    'API_KEY': env('API_KEY'),
+    'API_SECRET': env('API_SECRET')
 }
 
 DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
@@ -62,7 +70,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
 ROOT_URLCONF = 'blog_project.urls'
 
 TEMPLATES = [
@@ -83,33 +90,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'blog_project.wsgi.application'
 
-
 AUTH_PASSWORD_VALIDATORS = [
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    # },
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    # },
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    # },
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    # },
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
 ]
 
-
 LANGUAGE_CODE = 'en-us'
-
+TIME_ZONE = 'Asia/Kolkata'
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
-
-
-
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
@@ -127,28 +127,22 @@ LOGIN_URL = 'login'
 
 ADMIN_SITE_HEADER = "PostChat Hub"
 
-TIME_ZONE =  'Asia/Kolkata'
-
-
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND') 
-EMAIL_HOST = os.environ.get('EMAIL_HOST') 
-EMAIL_PORT = os.environ.get('EMAIL_PORT')
-EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER') # Your Gmail email address
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_BACKEND = env('EMAIL_BACKEND')
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env.int('EMAIL_PORT')
+EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
 DATABASES = {
     'default': {
-        'ENGINE': os.environ.get('DATABASES_ENGINE') ,
-        'NAME': os.environ.get('DATABASES_NAME') ,         # Database name
-        'USER': os.environ.get('DATABASES_USER') ,         # Database user
-        'PASSWORD': os.environ.get('DATABASES_PASSWORD') ,  # Database password
-        'HOST': os.environ.get('DATABASES_HOST') ,  # Database host
-        'PORT': '',  # Leave empty to use the default port (5432)
+        'ENGINE': env('DATABASES_ENGINE'),
+        'NAME': env('DATABASES_NAME'),
+        'USER': env('DATABASES_USER'),
+        'PASSWORD': env('DATABASES_PASSWORD'),
+        'HOST': env('DATABASES_HOST'),
+        'PORT': '',  # Leave empty to use the default port
     }
 }
-
-

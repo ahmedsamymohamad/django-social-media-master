@@ -70,7 +70,7 @@
         let isTextNode = (_, el) => el.nodeType === Node.TEXT_NODE;
         $('.currentPhoto').contents().filter(isTextNode).remove();
         var img = document.createElement("IMG");
-        img.src = '{{ post.image_thumbnail.url }}';
+        img.src = '{{ post.image.url }}';
         img.setAttribute('class', 'post-img-update');
         $('.currentPhoto').prepend('<br>Change Image'); 
         $('.currentPhoto').prepend(img);
